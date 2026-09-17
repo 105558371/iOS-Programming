@@ -2,6 +2,6 @@
 
 ## Trần Phương Hà - SESEIU24007
 
-## 📱 Screenshots
+## Screenshots
 
 ![App Screenshot](Screenshot.png)
