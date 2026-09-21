@@ -9,42 +9,49 @@ struct ContentView: View {
         Computer(name: "PC05", location: "Lab C", isAvailable: true)
     ]
     
+    @State private var showingAddSheet = false
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
                 Image(systemName: "desktopcomputer")
                     .font(.system(size: 40))
                     .foregroundColor(.blue)
+                
                 Text("Computer Lab")
                     .font(.title2).bold()
+                
                 Text("Manage computers easily")
                     .foregroundColor(.gray)
                 
                 List(computers) { computer in
-                    HStack {
-                        Image(systemName: "desktopcomputer")
-                            .foregroundColor(.gray)
-                        VStack(alignment: .leading) {
-                            Text(computer.name)
-                            Text(computer.location)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
+                    NavigationLink(destination: ComputerView(computer: computer)) {
+                        HStack {
+                            Image(systemName: "desktopcomputer")
+                                .foregroundColor(.gray)
+                            
+                            VStack(alignment: .leading) {
+                                Text(computer.name)
+                                Text(computer.location)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                            Spacer()
+                            
+                            HStack(spacing: 6) {
+                                Circle()
+                                    .fill(computer.isAvailable ? Color.green : Color.red)
+                                    .frame(width: 10, height: 10)
+                                Text(computer.isAvailable ? "Available" : "In Use")
+                                    .foregroundColor(computer.isAvailable ? .green : .red)
+                            }
                         }
-                        Spacer()
-                        HStack(spacing: 6) {
-                            Circle()
-                                .fill(computer.isAvailable ? Color.green : Color.red)
-                                .frame(width: 10, height: 10)
-                            Text(computer.isAvailable ? "Available" : "In Use")
-                                .foregroundColor(computer.isAvailable ? .green : .red)
-                        }
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.gray)
                     }
                 }
                 
                 Button(action: {
-                    // TODO: Navigate to AddComputerView
+                    showingAddSheet = true
                 }) {
                     HStack {
                         Image(systemName: "plus")
@@ -58,7 +65,44 @@ struct ContentView: View {
                 Text("Total computers: \(computers.count)")
             }
             .navigationTitle("")
+            .sheet(isPresented: $showingAddSheet) {
+                AddComputerView(computers: $computers)
+            }
         }
+    }
+}
+
+struct ComputerView: View {
+    let computer: Computer
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "desktopcomputer")
+                .font(.system(size: 80))
+                .foregroundColor(.blue)
+            
+            Text(computer.name)
+                .font(.largeTitle)
+                .bold()
+            
+            Text("Location: \(computer.location)")
+                .font(.title3)
+                .foregroundColor(.secondary)
+            
+            HStack {
+                Circle()
+                    .fill(computer.isAvailable ? Color.green : Color.red)
+                    .frame(width: 12, height: 12)
+                Text(computer.isAvailable ? "Available" : "In Use")
+                    .font(.headline)
+                    .foregroundColor(computer.isAvailable ? .green : .red)
+            }
+            
+            Spacer()
+        }
+        .padding()
+        .navigationTitle(computer.name)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
