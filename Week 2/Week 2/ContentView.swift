@@ -50,6 +50,16 @@ struct ContentView: View {
                     }
                 }
                 
+                // Action buttons
+                HStack(spacing: 12) {
+                    NavigationLink(destination: CheckComputerView(computers: computers)) {
+                        Label("Check", systemImage: "magnifyingglass")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                }
+                .padding(.horizontal)
+                
                 Button(action: {
                     showingAddSheet = true
                 }) {
