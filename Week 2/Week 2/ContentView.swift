@@ -57,6 +57,12 @@ struct ContentView: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
+                    
+                    NavigationLink(destination: StatisticsView(computers: computers)) {
+                        Label("Stats", systemImage: "chart.bar.fill")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
                 }
                 .padding(.horizontal)
                 

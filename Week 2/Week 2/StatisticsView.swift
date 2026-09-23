@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct StatisticsView: View {
-    let computers: [Computer] // receive array of struct
+    let computers: [Computer] 
     
     var totalCount: Int {
         computers.count
